@@ -1,0 +1,28 @@
+## EXPIRES CACHING ##
+<IfModule mod_headers.c>
+Header set Connection keep-alive
+</IfModule>
+
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf|txt|html|x-html|php|css|xml|js|woff|ttf|svg|eot)(\.gz)?$">
+    <IfModule mod_expires.c>
+        ExpiresActive On
+    </IfModule>
+    <IfModule mod_headers.c>
+        Header set Expires "access plus 1 month"
+        Header unset ETag
+    </IfModule>
+    FileETag None
+</FilesMatch>
+
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /magicjoey/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /magicjoey/index.php [L]
+</IfModule>
+
+# END WordPress
